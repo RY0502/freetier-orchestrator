@@ -59,3 +59,4 @@ export interface NodeAdapterOptions<TState, TInput, TOutput> {
     /** Merge the provider output back into the graph state. */
     applyOutput: (state: TState, output: TOutput) => Partial<TState>;
 }
+//# sourceMappingURL=types.d.ts.map

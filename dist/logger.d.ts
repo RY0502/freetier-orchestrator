@@ -3,3 +3,4 @@ import type { Logger } from "./types.js";
 export declare const defaultLogger: Logger;
 /** Logger that swallows all output. Useful for tests. */
 export declare const silentLogger: Logger;
+//# sourceMappingURL=logger.d.ts.map

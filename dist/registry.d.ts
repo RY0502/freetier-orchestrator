@@ -19,3 +19,4 @@ export declare class ProviderRegistry<TInput, TOutput> {
     clearCooldown(index: number): void;
     status(): ProviderStatus[];
 }
+//# sourceMappingURL=registry.d.ts.map

@@ -27,3 +27,4 @@ export declare class FreeTierOrchestrator<TInput = unknown, TOutput = unknown> {
     /** Snapshot of every provider's cooldown state. */
     getStatus(): ProviderStatus[];
 }
+//# sourceMappingURL=orchestrator.d.ts.map

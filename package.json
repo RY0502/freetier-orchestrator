@@ -2,7 +2,6 @@
   "name": "@freetier/orchestrator",
   "version": "0.1.0",
   "description": "Provider-agnostic LangGraph framework that maximizes free-tier usage by juggling multiple providers with retry and rate-limit failover.",
-  "private": true,
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -17,6 +16,7 @@
   ],
   "scripts": {
     "build": "tsc",
+    "prepare": "npm run build",
     "demo": "tsx examples/failover-demo.ts",
     "test": "tsx examples/failover-demo.ts"
   },
