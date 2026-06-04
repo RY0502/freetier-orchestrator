@@ -33,17 +33,17 @@ export interface ProviderConfig {
 export const DEFAULT_TEXT_MODELS = {
   groq: "llama-3.3-70b-versatile",
   huggingface: "meta-llama/Llama-3.3-70B-Instruct",
-  nvidia: "meta/llama-3.1-70b-instruct",
-  sambanova: "Meta-Llama-3.1-70B-Instruct",
-  cloudflare: "@cf/meta/llama-3.1-70b-instruct"
+  nvidia: "meta/llama-3.3-70b-instruct",
+  sambanova: "gpt-oss-120b",
+  cloudflare: "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
 };
 
 export const DEFAULT_VISION_MODELS = {
   groq: "meta-llama/llama-4-scout-17b-16e-instruct",
-  huggingface: "meta-llama/Llama-3.2-11B-Vision-Instruct",
-  nvidia: "mistralai/mistral-large-3-675b-instruct-2512",
+  huggingface: "meta-llama/Llama-4-Scout-17B-16E-Instruct",
+  nvidia: "meta/llama-4-maverick-17b-128e-instruct",
   sambanova: "Llama-4-Maverick-17B-128E-Instruct",
-  cloudflare: "@cf/meta/llama-3.2-11b-vision-instruct"
+  cloudflare: "@cf/meta/llama-4-scout-17b-16e-instruct"
 };
 
 export const DEFAULT_MAX_TOKENS = 2048;
