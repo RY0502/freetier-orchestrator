@@ -17,13 +17,75 @@ It is **not** tied to LLM or VLM. Any call that can fail with rate-limit / trans
 
 ## Install
 
-This package is local. From a consumer project, depend on it via a file path:
-
-```json
-{ "dependencies": { "@freetier/orchestrator": "file:freetier-orchestrator" } }
+```bash
+npm install @freetier/orchestrator
 ```
 
-Then build it (`npm install && npm run build` inside `freetier-orchestrator`).
+## Built-in Providers
+
+The framework includes ready-to-use providers for popular LLM services. They automatically read API keys from environment variables and support both text and vision models.
+
+### Supported Providers
+
+- **Groq** - `GROQ_API_KEY`
+- **HuggingFace** - `HUGGINGFACE_API_KEY`
+- **NVIDIA** - `NVIDIA_API_KEY`, `NVIDIA_API_URL` (optional)
+- **SambaNova** - `SAMBANOVA_API_KEY`, `SAMBANOVA_API_URL` (optional)
+- **Cloudflare Workers AI** - `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`
+
+### Quick Start
+
+```ts
+import { createProviders, FreeTierOrchestrator } from "@freetier/orchestrator";
+
+// Automatically creates providers based on available API keys in env
+const providers = createProviders();
+const orchestrator = new FreeTierOrchestrator(providers);
+
+// Works with both text and vision inputs
+const result = await orchestrator.invoke({
+  system: "You are a helpful assistant",
+  prompt: "What is the capital of France?",
+  imageBase64: undefined // Optional - omit for text-only
+});
+```
+
+### Custom Model Configuration
+
+Override default models per provider:
+
+```ts
+import { createProviders } from "@freetier/orchestrator";
+
+const providers = createProviders({
+  groq: { model: "llama-3.1-70b-versatile" },
+  huggingface: { model: "meta-llama/Llama-3.2-11B-Vision-Instruct" },
+  maxTokens: 4096
+});
+```
+
+### Environment Variables
+
+Set API keys in your `.env`:
+
+```bash
+GROQ_API_KEY=your_key_here
+HUGGINGFACE_API_KEY=your_key_here
+NVIDIA_API_KEY=your_key_here
+SAMBANOVA_API_KEY=your_key_here
+CLOUDFLARE_API_TOKEN=your_token_here
+CLOUDFLARE_ACCOUNT_ID=your_account_id_here
+```
+
+Optional model overrides (uses framework defaults if not set):
+
+```bash
+GROQ_MODEL=custom-model-name
+HUGGINGFACE_MODEL=custom-model-name
+NVIDIA_MODEL=custom-model-name
+SAMBANOVA_MODEL=custom-model-name
+CLOUDFLARE_MODEL=custom-model-name
+```
 
 ## Core concepts
 
