@@ -34,7 +34,7 @@ export const DEFAULT_TEXT_MODELS = {
   groq: "llama-3.3-70b-versatile",
   huggingface: "meta-llama/Llama-3.3-70B-Instruct",
   nvidia: "meta/llama-3.3-70b-instruct",
-  sambanova: "gpt-oss-120b",
+  sambanova: "Meta-Llama-3.3-70B-Instruct",
   cloudflare: "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
 };
 
