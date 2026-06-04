@@ -17,11 +17,11 @@ export function createProviders() {
     if (config.nvidia) {
         providers.push(new NvidiaProvider(config.nvidia.apiKey, config.nvidia.textModel, config.nvidia.visionModel, maxTokens, config.nvidia.baseUrl));
     }
-    if (config.huggingface) {
-        providers.push(new HuggingFaceProvider(config.huggingface.apiKey, config.huggingface.textModel, config.huggingface.visionModel, maxTokens));
-    }
     if (config.sambanova) {
         providers.push(new SambaNovaProvider(config.sambanova.apiKey, config.sambanova.textModel, config.sambanova.visionModel, maxTokens, config.sambanova.baseUrl));
+    }
+    if (config.huggingface) {
+        providers.push(new HuggingFaceProvider(config.huggingface.apiKey, config.huggingface.textModel, config.huggingface.visionModel, maxTokens));
     }
     if (providers.length === 0) {
         throw new Error("No LLM providers configured. Set at least one of: GROQ_API_KEY, HUGGINGFACE_API_KEY, NVIDIA_API_KEY, SAMBANOVA_API_KEY, or CLOUDFLARE_API_TOKEN+CLOUDFLARE_ACCOUNT_ID");

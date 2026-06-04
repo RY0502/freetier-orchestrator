@@ -8,7 +8,7 @@ export class HuggingFaceProvider extends OpenAICompatibleProvider {
       textModel,
       visionModel,
       maxTokens,
-      "https://api-inference.huggingface.co/v1/chat/completions"
+      "https://router.huggingface.co/v1/chat/completions"
     );
   }
 }

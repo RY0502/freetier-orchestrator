@@ -40,7 +40,7 @@ export const DEFAULT_TEXT_MODELS = {
 
 export const DEFAULT_VISION_MODELS = {
   groq: "meta-llama/llama-4-scout-17b-16e-instruct",
-  huggingface: "meta-llama/Llama-4-Scout-17B-16E-Instruct",
+  huggingface: "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8",
   nvidia: "meta/llama-4-maverick-17b-128e-instruct",
   sambanova: "Llama-4-Maverick-17B-128E-Instruct",
   cloudflare: "@cf/meta/llama-4-scout-17b-16e-instruct"

@@ -28,12 +28,6 @@ export function createProviders(): Provider<LlmInput, string>[] {
     );
   }
 
-  if (config.huggingface) {
-    providers.push(
-      new HuggingFaceProvider(config.huggingface.apiKey, config.huggingface.textModel, config.huggingface.visionModel, maxTokens)
-    );
-  }
-
   if (config.sambanova) {
     providers.push(
       new SambaNovaProvider(
@@ -43,6 +37,12 @@ export function createProviders(): Provider<LlmInput, string>[] {
         maxTokens,
         config.sambanova.baseUrl
       )
+    );
+  }
+
+  if (config.huggingface) {
+    providers.push(
+      new HuggingFaceProvider(config.huggingface.apiKey, config.huggingface.textModel, config.huggingface.visionModel, maxTokens)
     );
   }
 
