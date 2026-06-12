@@ -27,6 +27,12 @@ export interface ProviderConfig {
         textModel: string;
         visionModel: string;
     };
+    cerebras?: {
+        apiKey: string;
+        textModel: string;
+        visionModel: string;
+        baseUrl?: string;
+    };
     maxTokens: number;
 }
 export declare const DEFAULT_TEXT_MODELS: {
@@ -35,6 +41,7 @@ export declare const DEFAULT_TEXT_MODELS: {
     nvidia: string;
     sambanova: string;
     cloudflare: string;
+    cerebras: string;
 };
 export declare const DEFAULT_VISION_MODELS: {
     groq: string;
@@ -42,6 +49,7 @@ export declare const DEFAULT_VISION_MODELS: {
     nvidia: string;
     sambanova: string;
     cloudflare: string;
+    cerebras: string;
 };
 export declare const DEFAULT_MAX_TOKENS = 2048;
 export declare function loadConfigFromEnv(): ProviderConfig;

@@ -1,6 +1,7 @@
 import type { Provider } from "../types.js";
+import { CerebrasProvider } from "./cerebras-provider.js";
 import { CloudflareProvider } from "./cloudflare-provider.js";
-import { loadConfigFromEnv, type ProviderConfig } from "./config.js";
+import { loadConfigFromEnv } from "./config.js";
 import { GroqProvider } from "./groq-provider.js";
 import { HuggingFaceProvider } from "./huggingface-provider.js";
 import { NvidiaProvider } from "./nvidia-provider.js";
@@ -46,9 +47,15 @@ export function createProviders(): Provider<LlmInput, string>[] {
     );
   }
 
+  if (config.cerebras) {
+    providers.push(
+      new CerebrasProvider(config.cerebras.apiKey, config.cerebras.textModel, config.cerebras.visionModel, maxTokens, config.cerebras.baseUrl)
+    );
+  }
+
   if (providers.length === 0) {
     throw new Error(
-      "No LLM providers configured. Set at least one of: GROQ_API_KEY, HUGGINGFACE_API_KEY, NVIDIA_API_KEY, SAMBANOVA_API_KEY, or CLOUDFLARE_API_TOKEN+CLOUDFLARE_ACCOUNT_ID"
+      "No LLM providers configured. Set at least one of: GROQ_API_KEY, HUGGINGFACE_API_KEY, NVIDIA_API_KEY, SAMBANOVA_API_KEY, CEREBRAS_API_KEY, or CLOUDFLARE_API_TOKEN+CLOUDFLARE_ACCOUNT_ID"
     );
   }
 

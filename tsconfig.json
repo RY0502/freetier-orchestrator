@@ -10,6 +10,7 @@
     "outDir": "dist",
     "rootDir": "src",
     "resolveJsonModule": true,
+    "types": ["node"],
     "declaration": true,        // ← emits .d.ts files
     "declarationMap": true      // ← maps .d.ts back to source (nice for IDE go-to-definition)
   },

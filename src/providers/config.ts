@@ -27,6 +27,12 @@ export interface ProviderConfig {
     textModel: string;
     visionModel: string;
   };
+  cerebras?: {
+    apiKey: string;
+    textModel: string;
+    visionModel: string;
+    baseUrl?: string;
+  };
   maxTokens: number;
 }
 
@@ -35,7 +41,8 @@ export const DEFAULT_TEXT_MODELS = {
   huggingface: "meta-llama/Llama-3.3-70B-Instruct",
   nvidia: "meta/llama-3.3-70b-instruct",
   sambanova: "Meta-Llama-3.3-70B-Instruct",
-  cloudflare: "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
+  cloudflare: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+  cerebras: "zai-glm-4.7"
 };
 
 export const DEFAULT_VISION_MODELS = {
@@ -43,7 +50,8 @@ export const DEFAULT_VISION_MODELS = {
   huggingface: "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8",
   nvidia: "meta/llama-4-maverick-17b-128e-instruct",
   sambanova: "Llama-4-Maverick-17B-128E-Instruct",
-  cloudflare: "@cf/meta/llama-4-scout-17b-16e-instruct"
+  cloudflare: "@cf/meta/llama-4-scout-17b-16e-instruct",
+  cerebras: "zai-glm-4.7"
 };
 
 export const DEFAULT_MAX_TOKENS = 2048;
@@ -99,6 +107,16 @@ export function loadConfigFromEnv(): ProviderConfig {
       accountId: cloudflareAccountId,
       textModel: process.env.CLOUDFLARE_TEXT_MODEL ?? DEFAULT_TEXT_MODELS.cloudflare,
       visionModel: process.env.CLOUDFLARE_VISION_MODEL ?? DEFAULT_VISION_MODELS.cloudflare
+    };
+  }
+
+  const cerebrasKey = process.env.CEREBRAS_API_KEY;
+  if (cerebrasKey) {
+    config.cerebras = {
+      apiKey: cerebrasKey,
+      textModel: process.env.CEREBRAS_TEXT_MODEL ?? DEFAULT_TEXT_MODELS.cerebras,
+      visionModel: process.env.CEREBRAS_VISION_MODEL ?? DEFAULT_VISION_MODELS.cerebras,
+      baseUrl: process.env.CEREBRAS_API_URL
     };
   }
 

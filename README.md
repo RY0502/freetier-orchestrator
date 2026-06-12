@@ -31,6 +31,7 @@ The framework includes ready-to-use providers for popular LLM services. They aut
 - **HuggingFace** - `HUGGINGFACE_API_KEY`
 - **NVIDIA** - `NVIDIA_API_KEY`, `NVIDIA_API_URL` (optional)
 - **SambaNova** - `SAMBANOVA_API_KEY`, `SAMBANOVA_API_URL` (optional)
+- **Cerebras** - `CEREBRAS_API_KEY`, `CEREBRAS_API_URL` (optional)
 - **Cloudflare Workers AI** - `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`
 
 ### Quick Start
@@ -73,6 +74,7 @@ GROQ_API_KEY=your_key_here
 HUGGINGFACE_API_KEY=your_key_here
 NVIDIA_API_KEY=your_key_here
 SAMBANOVA_API_KEY=your_key_here
+CEREBRAS_API_KEY=your_key_here
 CLOUDFLARE_API_TOKEN=your_token_here
 CLOUDFLARE_ACCOUNT_ID=your_account_id_here
 ```
@@ -84,6 +86,8 @@ GROQ_MODEL=custom-model-name
 HUGGINGFACE_MODEL=custom-model-name
 NVIDIA_MODEL=custom-model-name
 SAMBANOVA_MODEL=custom-model-name
+CEREBRAS_TEXT_MODEL=custom-model-name
+CEREBRAS_VISION_MODEL=custom-model-name
 CLOUDFLARE_MODEL=custom-model-name
 ```
 
