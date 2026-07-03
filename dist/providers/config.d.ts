@@ -34,6 +34,7 @@ export interface ProviderConfig {
         baseUrl?: string;
     };
     maxTokens: number;
+    requestTimeoutMs: number;
 }
 export declare const DEFAULT_TEXT_MODELS: {
     groq: string;
@@ -52,5 +53,6 @@ export declare const DEFAULT_VISION_MODELS: {
     cerebras: string;
 };
 export declare const DEFAULT_MAX_TOKENS = 2048;
+export declare const DEFAULT_REQUEST_TIMEOUT_MS = 300000;
 export declare function loadConfigFromEnv(): ProviderConfig;
 //# sourceMappingURL=config.d.ts.map

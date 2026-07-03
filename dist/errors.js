@@ -1,4 +1,17 @@
 import { ErrorKind } from "./types.js";
+/**
+ * An error that carries the HTTP status code as a first-class numeric property.
+ * This lets the error classifier use deterministic status-code matching instead
+ * of fragile regex on the message string.
+ */
+export class HttpError extends Error {
+    status;
+    constructor(status, message) {
+        super(message);
+        this.status = status;
+        this.name = "HttpError";
+    }
+}
 /** Extract an HTTP-ish status code from common error shapes. */
 function statusOf(error) {
     if (typeof error === "object" && error !== null) {

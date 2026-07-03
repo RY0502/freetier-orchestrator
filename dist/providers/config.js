@@ -15,9 +15,11 @@ export const DEFAULT_VISION_MODELS = {
     cerebras: "zai-glm-4.7"
 };
 export const DEFAULT_MAX_TOKENS = 2048;
+export const DEFAULT_REQUEST_TIMEOUT_MS = 300_000;
 export function loadConfigFromEnv() {
     const config = {
-        maxTokens: process.env.MAX_TOKENS ? parseInt(process.env.MAX_TOKENS, 10) : DEFAULT_MAX_TOKENS
+        maxTokens: process.env.MAX_TOKENS ? parseInt(process.env.MAX_TOKENS, 10) : DEFAULT_MAX_TOKENS,
+        requestTimeoutMs: process.env.REQUEST_TIMEOUT_MS ? parseInt(process.env.REQUEST_TIMEOUT_MS, 10) : DEFAULT_REQUEST_TIMEOUT_MS
     };
     const groqKey = process.env.GROQ_API_KEY;
     if (groqKey) {

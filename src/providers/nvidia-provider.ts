@@ -1,14 +1,15 @@
 import { OpenAICompatibleProvider } from "./openai-compatible.js";
 
 export class NvidiaProvider extends OpenAICompatibleProvider {
-  constructor(apiKey: string, textModel: string, visionModel: string, maxTokens: number, baseUrl?: string) {
+  constructor(apiKey: string, textModel: string, visionModel: string, maxTokens: number, baseUrl?: string, requestTimeoutMs?: number) {
     super(
       "NVIDIA",
       apiKey,
       textModel,
       visionModel,
       maxTokens,
-      baseUrl || "https://integrate.api.nvidia.com/v1/chat/completions"
+      baseUrl || "https://integrate.api.nvidia.com/v1/chat/completions",
+      requestTimeoutMs
     );
   }
 }

@@ -43,27 +43,27 @@ import { createProviders, FreeTierOrchestrator } from "@freetier/orchestrator";
 const providers = createProviders();
 const orchestrator = new FreeTierOrchestrator(providers);
 
-// Works with both text and vision inputs
+// Text-only call
 const result = await orchestrator.invoke({
   system: "You are a helpful assistant",
-  prompt: "What is the capital of France?",
-  imageBase64: undefined // Optional - omit for text-only
+  prompt: "What is the capital of France?"
+});
+
+// Vision call — mimeType is auto-detected from base64 if omitted
+const visionResult = await orchestrator.invoke({
+  system: "Describe this image",
+  prompt: "What do you see?",
+  imageBase64: "iVBORw0KGgo...",
+  mimeType: "image/png" // optional, auto-detected if omitted
 });
 ```
 
 ### Custom Model Configuration
 
-Override default models per provider:
+All configuration is done via environment variables. `createProviders()` reads them
+automatically — there are no code-level arguments.
 
-```ts
-import { createProviders } from "@freetier/orchestrator";
-
-const providers = createProviders({
-  groq: { model: "llama-3.1-70b-versatile" },
-  huggingface: { model: "meta-llama/Llama-3.2-11B-Vision-Instruct" },
-  maxTokens: 4096
-});
-```
+See the **Environment Variables** section below for a complete list.
 
 ### Environment Variables
 
@@ -79,16 +79,37 @@ CLOUDFLARE_API_TOKEN=your_token_here
 CLOUDFLARE_ACCOUNT_ID=your_account_id_here
 ```
 
-Optional model overrides (uses framework defaults if not set):
+Optional model overrides (uses framework defaults if not set). Each provider has separate
+text and vision model env vars:
 
 ```bash
-GROQ_MODEL=custom-model-name
-HUGGINGFACE_MODEL=custom-model-name
-NVIDIA_MODEL=custom-model-name
-SAMBANOVA_MODEL=custom-model-name
+GROQ_TEXT_MODEL=custom-model-name
+GROQ_VISION_MODEL=custom-model-name
+HUGGINGFACE_TEXT_MODEL=custom-model-name
+HUGGINGFACE_VISION_MODEL=custom-model-name
+NVIDIA_TEXT_MODEL=custom-model-name
+NVIDIA_VISION_MODEL=custom-model-name
+SAMBANOVA_TEXT_MODEL=custom-model-name
+SAMBANOVA_VISION_MODEL=custom-model-name
 CEREBRAS_TEXT_MODEL=custom-model-name
 CEREBRAS_VISION_MODEL=custom-model-name
-CLOUDFLARE_MODEL=custom-model-name
+CLOUDFLARE_TEXT_MODEL=custom-model-name
+CLOUDFLARE_VISION_MODEL=custom-model-name
+```
+
+Optional global settings:
+
+```bash
+MAX_TOKENS=4096              # Default: 2048
+REQUEST_TIMEOUT_MS=30000     # Default: 60000 (60s)
+```
+
+Optional custom base URLs (NVIDIA, SambaNova, Cerebras):
+
+```bash
+NVIDIA_API_URL=https://custom-url.example.com/v1/chat/completions
+SAMBANOVA_API_URL=https://custom-url.example.com/v1/chat/completions
+CEREBRAS_API_URL=https://custom-url.example.com/v1/chat/completions
 ```
 
 ## Core concepts
