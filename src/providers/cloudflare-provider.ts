@@ -6,7 +6,7 @@ import type { LlmInput } from "./types.js";
 
 interface CloudflareResponse {
   result?: {
-    response?: string;
+    response?: string | Record<string, unknown> | unknown[];
   };
   success?: boolean;
   errors?: Array<{ message: string }>;
@@ -63,7 +63,13 @@ export class CloudflareProvider implements Provider<LlmInput, string> {
       throw new Error(`${this.name} API error: ${errorMsg}`);
     }
 
-    const content = data.result?.response?.trim();
+    const rawResponse = data.result?.response;
+    const content =
+      typeof rawResponse === "string"
+        ? rawResponse.trim()
+        : rawResponse != null
+          ? JSON.stringify(rawResponse).trim()
+          : undefined;
 
     if (!content) {
       throw new Error(
