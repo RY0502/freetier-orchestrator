@@ -48,7 +48,12 @@ export class CloudflareProvider {
             const errorMsg = data.errors?.map((e) => e.message).join(", ") ?? "Unknown error";
             throw new Error(`${this.name} API error: ${errorMsg}`);
         }
-        const content = data.result?.response?.trim();
+        const rawResponse = data.result?.response;
+        const content = typeof rawResponse === "string"
+            ? rawResponse.trim()
+            : rawResponse != null
+                ? JSON.stringify(rawResponse).trim()
+                : undefined;
         if (!content) {
             throw new Error(`${this.name} returned an empty response (model: ${model}). The response may have been filtered or the model produced no output.`);
         }
