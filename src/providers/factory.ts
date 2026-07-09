@@ -14,21 +14,33 @@ export function createProviders(): Provider<LlmInput, string>[] {
   const maxTokens = config.maxTokens;
   const timeoutMs = config.requestTimeoutMs;
 
-  if (config.groq) {
-    providers.push(new GroqProvider(config.groq.apiKey, config.groq.textModel, config.groq.visionModel, maxTokens, timeoutMs));
-  }
-
   if (config.cloudflare) {
     providers.push(
       new CloudflareProvider(config.cloudflare.apiToken, config.cloudflare.accountId, config.cloudflare.textModel, config.cloudflare.visionModel, timeoutMs)
     );
   }
 
-  // if (config.nvidia) {
-  //   providers.push(
-  //     new NvidiaProvider(config.nvidia.apiKey, config.nvidia.textModel, config.nvidia.visionModel, maxTokens, config.nvidia.baseUrl, timeoutMs)
-  //   );
-  // }
+  if (config.huggingface) {
+    providers.push(
+      new HuggingFaceProvider(config.huggingface.apiKey, config.huggingface.textModel, config.huggingface.visionModel, maxTokens, timeoutMs)
+    );
+  }
+
+  if (config.groq) {
+    providers.push(new GroqProvider(config.groq.apiKey, config.groq.textModel, config.groq.visionModel, maxTokens, timeoutMs));
+  }
+
+  if (config.nvidia) {
+    providers.push(
+      new NvidiaProvider(config.nvidia.apiKey, config.nvidia.textModel, config.nvidia.visionModel, maxTokens, config.nvidia.baseUrl, timeoutMs)
+    );
+  }
+
+  if (config.cerebras) {
+    providers.push(
+      new CerebrasProvider(config.cerebras.apiKey, config.cerebras.textModel, config.cerebras.visionModel, maxTokens, config.cerebras.baseUrl, timeoutMs)
+    );
+  }
 
   if (config.sambanova) {
     providers.push(
@@ -40,18 +52,6 @@ export function createProviders(): Provider<LlmInput, string>[] {
         config.sambanova.baseUrl,
         timeoutMs
       )
-    );
-  }
-
-  if (config.huggingface) {
-    providers.push(
-      new HuggingFaceProvider(config.huggingface.apiKey, config.huggingface.textModel, config.huggingface.visionModel, maxTokens, timeoutMs)
-    );
-  }
-
-  if (config.cerebras) {
-    providers.push(
-      new CerebrasProvider(config.cerebras.apiKey, config.cerebras.textModel, config.cerebras.visionModel, maxTokens, config.cerebras.baseUrl, timeoutMs)
     );
   }
 

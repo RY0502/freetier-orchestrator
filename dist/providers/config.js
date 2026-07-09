@@ -12,7 +12,7 @@ export const DEFAULT_VISION_MODELS = {
     nvidia: "mistralai/mistral-large-3-675b-instruct-2512",
     sambanova: "gemma-4-31B-it",
     cloudflare: "@cf/meta/llama-4-scout-17b-16e-instruct",
-    cerebras: "zai-glm-4.7"
+    cerebras: "gemma-4-31b"
 };
 export const DEFAULT_MAX_TOKENS = 2048;
 export const DEFAULT_REQUEST_TIMEOUT_MS = 300_000;
