@@ -24,11 +24,11 @@ export function createProviders(): Provider<LlmInput, string>[] {
     );
   }
 
-  if (config.nvidia) {
-    providers.push(
-      new NvidiaProvider(config.nvidia.apiKey, config.nvidia.textModel, config.nvidia.visionModel, maxTokens, config.nvidia.baseUrl, timeoutMs)
-    );
-  }
+  // if (config.nvidia) {
+  //   providers.push(
+  //     new NvidiaProvider(config.nvidia.apiKey, config.nvidia.textModel, config.nvidia.visionModel, maxTokens, config.nvidia.baseUrl, timeoutMs)
+  //   );
+  // }
 
   if (config.sambanova) {
     providers.push(

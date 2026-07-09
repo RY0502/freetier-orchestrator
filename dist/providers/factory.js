@@ -3,7 +3,6 @@ import { CloudflareProvider } from "./cloudflare-provider.js";
 import { loadConfigFromEnv } from "./config.js";
 import { GroqProvider } from "./groq-provider.js";
 import { HuggingFaceProvider } from "./huggingface-provider.js";
-import { NvidiaProvider } from "./nvidia-provider.js";
 import { SambaNovaProvider } from "./sambanova-provider.js";
 export function createProviders() {
     const config = loadConfigFromEnv();
@@ -16,9 +15,11 @@ export function createProviders() {
     if (config.cloudflare) {
         providers.push(new CloudflareProvider(config.cloudflare.apiToken, config.cloudflare.accountId, config.cloudflare.textModel, config.cloudflare.visionModel, timeoutMs));
     }
-    if (config.nvidia) {
-        providers.push(new NvidiaProvider(config.nvidia.apiKey, config.nvidia.textModel, config.nvidia.visionModel, maxTokens, config.nvidia.baseUrl, timeoutMs));
-    }
+    // if (config.nvidia) {
+    //   providers.push(
+    //     new NvidiaProvider(config.nvidia.apiKey, config.nvidia.textModel, config.nvidia.visionModel, maxTokens, config.nvidia.baseUrl, timeoutMs)
+    //   );
+    // }
     if (config.sambanova) {
         providers.push(new SambaNovaProvider(config.sambanova.apiKey, config.sambanova.textModel, config.sambanova.visionModel, maxTokens, config.sambanova.baseUrl, timeoutMs));
     }
