@@ -50,7 +50,7 @@ export class FreeTierOrchestrator {
                 if (!this.registry.isInCooldown(index)) {
                     return { index, tried, attempt: 0, route: "call", providerName: this.registry.at(index).name };
                 }
-                this.logger.info(`[FreeTier] Provider "${this.registry.at(index).name}" is in cooldown, skipping.`);
+                this.logger.info(`[FreeTier-Orchestrator] Provider "${this.registry.at(index).name}" is in cooldown, skipping.`);
                 index = (index + 1) % total;
                 tried += 1;
             }
@@ -58,12 +58,12 @@ export class FreeTierOrchestrator {
         };
         const callNode = async (state) => {
             const provider = this.registry.at(state.index);
-            this.logger.info(`[FreeTier] Calling "${provider.name}" (provider ${state.tried + 1}/${this.registry.size()}, attempt ${state.attempt + 1}/${this.retry.maxRetries + 1}).`);
+            this.logger.info(`[FreeTier-Orchestrator] Calling "${provider.name}" (provider ${state.tried + 1}/${this.registry.size()}, attempt ${state.attempt + 1}/${this.retry.maxRetries + 1}).`);
             try {
                 const output = await provider.invoke(state.input);
                 this.registry.clearCooldown(state.index);
                 this.registry.setCurrent(state.index);
-                this.logger.info(`[FreeTier] Provider "${provider.name}" succeeded.`);
+                this.logger.info(`[FreeTier-Orchestrator] Provider "${provider.name}" succeeded.`);
                 return { output, outcome: "success", route: "success" };
             }
             catch (error) {
@@ -71,34 +71,34 @@ export class FreeTierOrchestrator {
                 const message = error instanceof Error ? error.message : String(error);
                 if (kind === ErrorKind.Retryable) {
                     if (state.attempt < this.retry.maxRetries) {
-                        this.logger.warn(`[FreeTier] Provider "${provider.name}" transient error, will retry: ${message}`);
+                        this.logger.warn(`[FreeTier-Orchestrator] Provider "${provider.name}" transient error, will retry: ${message}`);
                         return { route: "retry", lastError: message };
                     }
-                    this.logger.warn(`[FreeTier] Provider "${provider.name}" transient error, retries exhausted, advancing: ${message}`);
+                    this.logger.warn(`[FreeTier-Orchestrator] Provider "${provider.name}" transient error, retries exhausted, advancing: ${message}`);
                     return { route: "advance-transient", lastError: message };
                 }
                 if (kind === ErrorKind.Quota) {
-                    this.logger.warn(`[FreeTier] Provider "${provider.name}" quota/rate-limit error, advancing: ${message}`);
+                    this.logger.warn(`[FreeTier-Orchestrator] Provider "${provider.name}" quota/rate-limit error, advancing: ${message}`);
                     return { route: "advance-quota", lastError: message };
                 }
-                this.logger.error(`[FreeTier] Provider "${provider.name}" fatal error: ${message}`);
+                this.logger.error(`[FreeTier-Orchestrator] Provider "${provider.name}" fatal error: ${message}`);
                 return { outcome: "fatal", route: "fatal", lastError: message };
             }
         };
         const waitNode = async (state) => {
-            this.logger.info(`[FreeTier] Waiting ${this.retry.retryDelayMs}ms before retry.`);
+            this.logger.info(`[FreeTier-Orchestrator] Waiting ${this.retry.retryDelayMs}ms before retry.`);
             await sleep(this.retry.retryDelayMs);
             return { attempt: state.attempt + 1, route: "call" };
         };
         const advanceNode = (state) => {
             if (state.route === "advance-quota") {
                 this.registry.setCooldown(state.index, this.cooldown.cooldownMs);
-                this.logger.info(`[FreeTier] Provider "${this.registry.at(state.index).name}" cooling down for ${this.cooldown.cooldownMs / 1000}s.`);
+                this.logger.info(`[FreeTier-Orchestrator] Provider "${this.registry.at(state.index).name}" cooling down for ${this.cooldown.cooldownMs / 1000}s.`);
             }
             const total = this.registry.size();
             const nextIndex = (state.index + 1) % total;
             this.registry.setCurrent(nextIndex);
-            this.logger.info(`[FreeTier] Switching from "${this.registry.at(state.index).name}" to "${this.registry.at(nextIndex).name}".`);
+            this.logger.info(`[FreeTier-Orchestrator] Switching from "${this.registry.at(state.index).name}" to "${this.registry.at(nextIndex).name}".`);
             return { index: nextIndex, tried: state.tried + 1, attempt: 0, route: "select" };
         };
         return new StateGraph(OrchestratorState)
@@ -136,9 +136,9 @@ export class FreeTierOrchestrator {
             return final.output;
         }
         if (final.outcome === "fatal") {
-            throw new Error(`[FreeTier] Provider "${final.providerName}" failed with a non-recoverable error: ${final.lastError}`);
+            throw new Error(`[FreeTier-Orchestrator] Provider "${final.providerName}" failed with a non-recoverable error: ${final.lastError}`);
         }
-        throw new Error(`[FreeTier] All ${this.registry.size()} provider(s) exhausted (${this.registry.names().join(", ")}). Last error: ${final.lastError ?? "unknown"}`);
+        throw new Error(`[FreeTier-Orchestrator] All ${this.registry.size()} provider(s) exhausted (${this.registry.names().join(", ")}). Last error: ${final.lastError ?? "unknown"}`);
     }
     /**
      * Wrap this orchestrator as a LangGraph node so a parent agent can route its
