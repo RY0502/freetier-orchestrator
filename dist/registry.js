@@ -30,6 +30,15 @@ export class ProviderRegistry {
     names() {
         return this.providers.map((provider) => provider.name);
     }
+    describe() {
+        return this.providers.map((provider) => {
+            const modelConfig = provider.getModelConfig?.();
+            if (!modelConfig) {
+                return provider.name;
+            }
+            return `${provider.name} (text: ${modelConfig.textModel}, vision: ${modelConfig.visionModel})`;
+        });
+    }
     current() {
         return this.currentIndex;
     }

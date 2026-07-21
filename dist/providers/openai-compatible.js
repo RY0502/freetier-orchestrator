@@ -19,6 +19,9 @@ export class OpenAICompatibleProvider {
         this.apiUrl = apiUrl;
         this.requestTimeoutMs = requestTimeoutMs;
     }
+    getModelConfig() {
+        return { textModel: this.textModel, visionModel: this.visionModel };
+    }
     async invoke(input) {
         const hasImage = Boolean(input.imageBase64);
         const model = hasImage ? this.visionModel : this.textModel;

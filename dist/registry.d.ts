@@ -12,6 +12,7 @@ export declare class ProviderRegistry<TInput, TOutput> {
     size(): number;
     at(index: number): Provider<TInput, TOutput>;
     names(): string[];
+    describe(): string[];
     current(): number;
     setCurrent(index: number): void;
     isInCooldown(index: number): boolean;

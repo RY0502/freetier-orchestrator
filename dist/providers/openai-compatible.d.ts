@@ -11,6 +11,10 @@ export declare class OpenAICompatibleProvider implements Provider<LlmInput, stri
     private readonly apiUrl;
     private readonly requestTimeoutMs;
     constructor(name: string, apiKey: string, textModel: string, visionModel: string, maxTokens: number, apiUrl: string, requestTimeoutMs?: number);
+    getModelConfig(): {
+        textModel: string;
+        visionModel: string;
+    };
     invoke(input: LlmInput): Promise<string>;
 }
 //# sourceMappingURL=openai-compatible.d.ts.map

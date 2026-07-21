@@ -58,7 +58,7 @@ export class FreeTierOrchestrator<TInput = unknown, TOutput = unknown> {
     this.logger = options.logger ?? defaultLogger;
     this.graph = this.buildGraph();
 
-    this.logger.info(`[FreeTier] Initialized with ${this.registry.size()} provider(s): ${this.registry.names().join(", ")}`);
+    this.logger.info(`[FreeTier-Orchestrator] Initialized with ${this.registry.size()} provider(s): ${this.registry.describe().join(", ")}`);
   }
 
   private buildGraph() {

@@ -22,6 +22,10 @@ export class OpenAICompatibleProvider implements Provider<LlmInput, string> {
     private readonly requestTimeoutMs: number = DEFAULT_REQUEST_TIMEOUT_MS
   ) {}
 
+  getModelConfig() {
+    return { textModel: this.textModel, visionModel: this.visionModel };
+  }
+
   async invoke(input: LlmInput): Promise<string> {
     const hasImage = Boolean(input.imageBase64);
     const model = hasImage ? this.visionModel : this.textModel;

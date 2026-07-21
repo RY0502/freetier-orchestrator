@@ -39,6 +39,17 @@ export class ProviderRegistry<TInput, TOutput> {
     return this.providers.map((provider) => provider.name);
   }
 
+  describe(): string[] {
+    return this.providers.map((provider) => {
+      const modelConfig = provider.getModelConfig?.();
+      if (!modelConfig) {
+        return provider.name;
+      }
+
+      return `${provider.name} (text: ${modelConfig.textModel}, vision: ${modelConfig.visionModel})`;
+    });
+  }
+
   current(): number {
     return this.currentIndex;
   }

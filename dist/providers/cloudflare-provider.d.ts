@@ -8,6 +8,10 @@ export declare class CloudflareProvider implements Provider<LlmInput, string> {
     private readonly requestTimeoutMs;
     readonly name = "Cloudflare";
     constructor(apiToken: string, accountId: string, textModel: string, visionModel: string, requestTimeoutMs?: number);
+    getModelConfig(): {
+        textModel: string;
+        visionModel: string;
+    };
     invoke(input: LlmInput): Promise<string>;
 }
 //# sourceMappingURL=cloudflare-provider.d.ts.map

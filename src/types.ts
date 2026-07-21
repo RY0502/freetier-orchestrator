@@ -26,6 +26,11 @@ export interface Provider<TInput = unknown, TOutput = unknown> {
   invoke(input: TInput): Promise<TOutput>;
 
   /**
+   * Optional model metadata used for logging and observability.
+   */
+  getModelConfig?(): { textModel: string; visionModel: string };
+
+  /**
    * Optional custom error classification. Return an {@link ErrorKind} to override
    * the built-in classifier, or `undefined` to defer to the default behavior.
    */
