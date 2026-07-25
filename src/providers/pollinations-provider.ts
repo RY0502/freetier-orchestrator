@@ -5,7 +5,7 @@ import { defaultLogger } from "../logger.js";
 import { ErrorKind, type Logger, type Provider } from "../types.js";
 import type { ImageGenInput } from "./types.js";
 
-const POLLINATIONS_BASE_URL = "https://gen.pollinations.ai/image";
+const POLLINATIONS_BASE_URL = "https://image.pollinations.ai/prompt";
 
 /** Retry policy for transient / network / model-busy errors. */
 const TRANSIENT_MAX_RETRIES = 2;
