@@ -21,4 +21,5 @@ export {
   loadConfigFromEnv,
   type ProviderConfig
 } from "./providers/config.js";
-export { type LlmInput, type LlmOutput } from "./providers/types.js";
+export { type LlmInput, type LlmOutput, type ImageGenInput } from "./providers/types.js";
+export { PollinationsImageProvider } from "./providers/pollinations-provider.js";
