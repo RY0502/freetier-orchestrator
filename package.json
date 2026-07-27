@@ -18,7 +18,11 @@
     "build": "tsc",
     "prepare": "npm run build",
     "demo": "tsx examples/failover-demo.ts",
-    "test": "tsx examples/failover-demo.ts"
+    "test": "tsx examples/failover-demo.ts",
+    "test:logging": "tsx scripts/logging.test.ts",
+    "test:image-gen": "tsx scripts/image-gen.test.ts",
+    "test:audio-gen": "tsx scripts/audio-gen.test.ts",
+    "test:tools": "tsx scripts/image-gen.test.ts && tsx scripts/audio-gen.test.ts"
   },
   "engines": {
     "node": ">=20"
