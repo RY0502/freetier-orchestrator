@@ -46,4 +46,15 @@ export interface ImageGenInput {
   audio?: boolean;
 }
 
-
+export interface AudioGenInput {
+  /** The text to convert to speech. */
+  input: string;
+  /** Absolute or relative file path where the generated audio will be saved. */
+  outputPath: string;
+  /** Voice to use (default: "hannah"). */
+  voice?: string;
+  /** TTS model to use (default: "canopylabs/orpheus-v1-english"). */
+  model?: string;
+  /** Audio output format (default: "wav"). */
+  responseFormat?: string;
+}

@@ -21,5 +21,6 @@ export {
   loadConfigFromEnv,
   type ProviderConfig
 } from "./providers/config.js";
-export { type LlmInput, type LlmOutput, type ImageGenInput } from "./providers/types.js";
+export { type LlmInput, type LlmOutput, type ImageGenInput, type AudioGenInput } from "./providers/types.js";
 export { PollinationsImageProvider } from "./providers/pollinations-provider.js";
+export { createImageGenTool, createAudioGenTool } from "./tools/index.js";
