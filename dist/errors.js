@@ -51,7 +51,11 @@ const QUOTA_PATTERNS = [
     /usage limit/i,
     /exceeded your current/i,
     /\(429\)/,
-    /\b429\b/
+    /\b429\b/,
+    /\bempty response\b/i,
+    /produced no output/i,
+    /response may have been filtered/i,
+    /\bfiltered\b/i
 ];
 const RETRYABLE_PATTERNS = [
     /timeout/i,
