@@ -7,5 +7,6 @@ export { createProviders, createTextProviders, createVisionProviders } from "./p
 export { DEFAULT_TEXT_MODELS, DEFAULT_VISION_MODELS, DEFAULT_MAX_TOKENS, DEFAULT_REQUEST_TIMEOUT_MS, loadConfigFromEnv, type ProviderConfig } from "./providers/config.js";
 export { type LlmInput, type LlmOutput, type ImageGenInput, type AudioGenInput } from "./providers/types.js";
 export { PollinationsImageProvider } from "./providers/pollinations-provider.js";
+export { RequestyProvider } from "./providers/requesty-provider.js";
 export { createImageGenTool, createAudioGenTool } from "./tools/index.js";
 //# sourceMappingURL=index.d.ts.map

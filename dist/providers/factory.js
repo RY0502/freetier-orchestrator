@@ -40,7 +40,7 @@ export function createProviders(type = "text") {
         }
     }
     if (providers.length === 0) {
-        throw new Error("No LLM providers configured. Set at least one of: GROQ_API_KEY, HUGGINGFACE_API_KEY, NVIDIA_API_KEY, SAMBANOVA_API_KEY, CEREBRAS_API_KEY, or CLOUDFLARE_API_TOKEN+CLOUDFLARE_ACCOUNT_ID");
+        throw new Error("No LLM providers configured. Set at least one of: GROQ_API_KEY, HUGGINGFACE_API_KEY, NVIDIA_API_KEY, REQUESTY_API_KEY, SAMBANOVA_API_KEY, CEREBRAS_API_KEY, or CLOUDFLARE_API_TOKEN+CLOUDFLARE_ACCOUNT_ID");
     }
     return providers;
 }

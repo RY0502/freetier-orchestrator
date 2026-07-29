@@ -6,4 +6,5 @@ export { ErrorKind } from "./types.js";
 export { createProviders, createTextProviders, createVisionProviders } from "./providers/factory.js";
 export { DEFAULT_TEXT_MODELS, DEFAULT_VISION_MODELS, DEFAULT_MAX_TOKENS, DEFAULT_REQUEST_TIMEOUT_MS, loadConfigFromEnv } from "./providers/config.js";
 export { PollinationsImageProvider } from "./providers/pollinations-provider.js";
+export { RequestyProvider } from "./providers/requesty-provider.js";
 export { createImageGenTool, createAudioGenTool } from "./tools/index.js";

@@ -4,6 +4,12 @@ export interface ProviderConfig {
     textModel: string;
     visionModel: string;
   };
+  requesty?: {
+    apiKey: string;
+    textModel: string;
+    visionModel: string;
+    baseUrl?: string;
+  };
   huggingface?: {
     apiKey: string;
     textModel: string;
@@ -41,6 +47,7 @@ export const DEFAULT_TEXT_MODELS = {
   groq: "llama-3.3-70b-versatile",
   huggingface: "meta-llama/Llama-3.3-70B-Instruct",
   nvidia: "meta/llama-3.3-70b-instruct",
+  requesty: "nvidia/nemotron-3-super-120b-a12b",
   sambanova: "Meta-Llama-3.3-70B-Instruct",
   cloudflare: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
   cerebras: "zai-glm-4.7"
@@ -50,6 +57,7 @@ export const DEFAULT_VISION_MODELS = {
   groq: "openai/gpt-oss-120b",
   huggingface: "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8",
   nvidia: "mistralai/mistral-large-3-675b-instruct-2512",
+  requesty: "nvidia/nemotron-3-super-120b-a12b",
   sambanova: "gemma-4-31B-it",
   cloudflare: "@cf/meta/llama-4-scout-17b-16e-instruct",
   cerebras: "gemma-4-31b"
@@ -89,6 +97,16 @@ export function loadConfigFromEnv(): ProviderConfig {
       textModel: process.env.NVIDIA_TEXT_MODEL ?? DEFAULT_TEXT_MODELS.nvidia,
       visionModel: process.env.NVIDIA_VISION_MODEL ?? DEFAULT_VISION_MODELS.nvidia,
       baseUrl: process.env.NVIDIA_API_URL
+    };
+  }
+
+  const requestyKey = process.env.REQUESTY_API_KEY;
+  if (requestyKey) {
+    config.requesty = {
+      apiKey: requestyKey,
+      textModel: process.env.REQUESTY_TEXT_MODEL ?? DEFAULT_TEXT_MODELS.requesty,
+      visionModel: process.env.REQUESTY_VISION_MODEL ?? DEFAULT_VISION_MODELS.requesty,
+      baseUrl: process.env.REQUESTY_API_URL
     };
   }
 

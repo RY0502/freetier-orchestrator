@@ -4,6 +4,12 @@ export interface ProviderConfig {
         textModel: string;
         visionModel: string;
     };
+    requesty?: {
+        apiKey: string;
+        textModel: string;
+        visionModel: string;
+        baseUrl?: string;
+    };
     huggingface?: {
         apiKey: string;
         textModel: string;
@@ -40,6 +46,7 @@ export declare const DEFAULT_TEXT_MODELS: {
     groq: string;
     huggingface: string;
     nvidia: string;
+    requesty: string;
     sambanova: string;
     cloudflare: string;
     cerebras: string;
@@ -48,6 +55,7 @@ export declare const DEFAULT_VISION_MODELS: {
     groq: string;
     huggingface: string;
     nvidia: string;
+    requesty: string;
     sambanova: string;
     cloudflare: string;
     cerebras: string;

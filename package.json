@@ -20,6 +20,7 @@
     "demo": "tsx examples/failover-demo.ts",
     "test": "tsx scripts/logging.test.ts && tsx scripts/orchestrator-failover.test.ts && tsx scripts/factory-order.test.ts",
     "test:logging": "tsx scripts/logging.test.ts",
+    "test:requesty": "tsx scripts/requesty-provider.test.ts",
     "test:image-gen": "tsx scripts/image-gen.test.ts",
     "test:audio-gen": "tsx scripts/audio-gen.test.ts",
     "test:tools": "tsx scripts/image-gen.test.ts && tsx scripts/audio-gen.test.ts"

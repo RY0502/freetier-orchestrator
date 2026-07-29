@@ -5,6 +5,7 @@ import { loadConfigFromEnv } from "./config.js";
 import { GroqProvider } from "./groq-provider.js";
 import { HuggingFaceProvider } from "./huggingface-provider.js";
 import { NvidiaProvider } from "./nvidia-provider.js";
+import { RequestyProvider } from "./requesty-provider.js";
 import { SambaNovaProvider } from "./sambanova-provider.js";
 import type { LlmInput } from "./types.js";
 
@@ -88,7 +89,7 @@ export function createProviders(type: "text" | "vision" = "text"): Provider<LlmI
 
   if (providers.length === 0) {
     throw new Error(
-      "No LLM providers configured. Set at least one of: GROQ_API_KEY, HUGGINGFACE_API_KEY, NVIDIA_API_KEY, SAMBANOVA_API_KEY, CEREBRAS_API_KEY, or CLOUDFLARE_API_TOKEN+CLOUDFLARE_ACCOUNT_ID"
+      "No LLM providers configured. Set at least one of: GROQ_API_KEY, HUGGINGFACE_API_KEY, NVIDIA_API_KEY, REQUESTY_API_KEY, SAMBANOVA_API_KEY, CEREBRAS_API_KEY, or CLOUDFLARE_API_TOKEN+CLOUDFLARE_ACCOUNT_ID"
     );
   }
 
