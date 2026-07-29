@@ -8,7 +8,7 @@ export const DEFAULT_TEXT_MODELS = {
     cerebras: "zai-glm-4.7"
 };
 export const DEFAULT_VISION_MODELS = {
-    groq: "openai/gpt-oss-120b",
+    groq: "qwen/qwen3.6-27b",
     huggingface: "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8",
     nvidia: "mistralai/mistral-large-3-675b-instruct-2512",
     requesty: "nvidia/nemotron-3-super-120b-a12b",
