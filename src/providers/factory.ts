@@ -8,51 +8,82 @@ import { NvidiaProvider } from "./nvidia-provider.js";
 import { SambaNovaProvider } from "./sambanova-provider.js";
 import type { LlmInput } from "./types.js";
 
-export function createProviders(): Provider<LlmInput, string>[] {
+export function createProviders(type: "text" | "vision" = "text"): Provider<LlmInput, string>[] {
   const config = loadConfigFromEnv();
-  const providers: Provider<LlmInput, string>[] = [];
   const maxTokens = config.maxTokens;
   const timeoutMs = config.requestTimeoutMs;
 
-  if (config.cloudflare) {
-    providers.push(
-      new CloudflareProvider(config.cloudflare.apiToken, config.cloudflare.accountId, config.cloudflare.textModel, config.cloudflare.visionModel, timeoutMs)
-    );
-  }
+  const providerMap: Record<string, () => Provider<LlmInput, string> | undefined> = {
+    cloudflare: () =>
+      config.cloudflare
+        ? new CloudflareProvider(
+            config.cloudflare.apiToken,
+            config.cloudflare.accountId,
+            config.cloudflare.textModel,
+            config.cloudflare.visionModel,
+            timeoutMs
+          )
+        : undefined,
+    groq: () =>
+      config.groq
+        ? new GroqProvider(config.groq.apiKey, config.groq.textModel, config.groq.visionModel, maxTokens, timeoutMs)
+        : undefined,
+    nvidia: () =>
+      config.nvidia
+        ? new NvidiaProvider(
+            config.nvidia.apiKey,
+            config.nvidia.textModel,
+            config.nvidia.visionModel,
+            maxTokens,
+            config.nvidia.baseUrl,
+            timeoutMs
+          )
+        : undefined,
+    cerebras: () =>
+      config.cerebras
+        ? new CerebrasProvider(
+            config.cerebras.apiKey,
+            config.cerebras.textModel,
+            config.cerebras.visionModel,
+            maxTokens,
+            config.cerebras.baseUrl,
+            timeoutMs
+          )
+        : undefined,
+    huggingface: () =>
+      config.huggingface
+        ? new HuggingFaceProvider(
+            config.huggingface.apiKey,
+            config.huggingface.textModel,
+            config.huggingface.visionModel,
+            maxTokens,
+            timeoutMs
+          )
+        : undefined,
+    sambanova: () =>
+      config.sambanova
+        ? new SambaNovaProvider(
+            config.sambanova.apiKey,
+            config.sambanova.textModel,
+            config.sambanova.visionModel,
+            maxTokens,
+            config.sambanova.baseUrl,
+            timeoutMs
+          )
+        : undefined
+  };
 
-  if (config.huggingface) {
-    providers.push(
-      new HuggingFaceProvider(config.huggingface.apiKey, config.huggingface.textModel, config.huggingface.visionModel, maxTokens, timeoutMs)
-    );
-  }
+  const textOrder = ["cloudflare", "groq", "nvidia", "cerebras", "huggingface", "sambanova"];
+  const visionOrder = ["cloudflare", "nvidia", "cerebras", "groq", "huggingface", "sambanova"];
 
-  if (config.groq) {
-    providers.push(new GroqProvider(config.groq.apiKey, config.groq.textModel, config.groq.visionModel, maxTokens, timeoutMs));
-  }
+  const order = type === "vision" ? visionOrder : textOrder;
+  const providers: Provider<LlmInput, string>[] = [];
 
-  if (config.nvidia) {
-    providers.push(
-      new NvidiaProvider(config.nvidia.apiKey, config.nvidia.textModel, config.nvidia.visionModel, maxTokens, config.nvidia.baseUrl, timeoutMs)
-    );
-  }
-
-  if (config.cerebras) {
-    providers.push(
-      new CerebrasProvider(config.cerebras.apiKey, config.cerebras.textModel, config.cerebras.visionModel, maxTokens, config.cerebras.baseUrl, timeoutMs)
-    );
-  }
-
-  if (config.sambanova) {
-    providers.push(
-      new SambaNovaProvider(
-        config.sambanova.apiKey,
-        config.sambanova.textModel,
-        config.sambanova.visionModel,
-        maxTokens,
-        config.sambanova.baseUrl,
-        timeoutMs
-      )
-    );
+  for (const name of order) {
+    const provider = providerMap[name]?.();
+    if (provider) {
+      providers.push(provider);
+    }
   }
 
   if (providers.length === 0) {
@@ -63,3 +94,12 @@ export function createProviders(): Provider<LlmInput, string>[] {
 
   return providers;
 }
+
+export function createTextProviders(): Provider<LlmInput, string>[] {
+  return createProviders("text");
+}
+
+export function createVisionProviders(): Provider<LlmInput, string>[] {
+  return createProviders("vision");
+}
+

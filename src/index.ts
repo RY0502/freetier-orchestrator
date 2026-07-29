@@ -12,7 +12,7 @@ export {
   type ProviderStatus,
   type RetryPolicy
 } from "./types.js";
-export { createProviders } from "./providers/factory.js";
+export { createProviders, createTextProviders, createVisionProviders } from "./providers/factory.js";
 export {
   DEFAULT_TEXT_MODELS,
   DEFAULT_VISION_MODELS,
