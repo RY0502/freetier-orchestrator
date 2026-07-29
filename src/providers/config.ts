@@ -56,7 +56,7 @@ export const DEFAULT_TEXT_MODELS = {
 export const DEFAULT_VISION_MODELS = {
   groq: "qwen/qwen3.6-27b",
   huggingface: "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8",
-  nvidia: "mistralai/mistral-large-3-675b-instruct-2512",
+  nvidia: "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
   requesty: "nvidia/nemotron-3-super-120b-a12b",
   sambanova: "gemma-4-31B-it",
   cloudflare: "@cf/meta/llama-4-scout-17b-16e-instruct",
