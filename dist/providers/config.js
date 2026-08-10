@@ -18,6 +18,20 @@ export const DEFAULT_VISION_MODELS = {
 };
 export const DEFAULT_MAX_TOKENS = 2048;
 export const DEFAULT_REQUEST_TIMEOUT_MS = 300_000;
+function loadEnvKeys(baseName) {
+    const values = [];
+    const baseValue = process.env[baseName];
+    if (baseValue) {
+        values.push(baseValue);
+    }
+    for (let index = 1;; index += 1) {
+        const value = process.env[`${baseName}_${index}`];
+        if (!value)
+            break;
+        values.push(value);
+    }
+    return values;
+}
 export function loadConfigFromEnv() {
     const config = {
         maxTokens: process.env.MAX_TOKENS ? parseInt(process.env.MAX_TOKENS, 10) : DEFAULT_MAX_TOKENS,
@@ -39,10 +53,10 @@ export function loadConfigFromEnv() {
             visionModel: process.env.HUGGINGFACE_VISION_MODEL ?? DEFAULT_VISION_MODELS.huggingface
         };
     }
-    const nvidiaKey = process.env.NVIDIA_API_KEY;
-    if (nvidiaKey) {
+    const nvidiaKeys = loadEnvKeys("NVIDIA_API_KEY");
+    if (nvidiaKeys.length > 0) {
         config.nvidia = {
-            apiKey: nvidiaKey,
+            apiKeys: nvidiaKeys,
             textModel: process.env.NVIDIA_TEXT_MODEL ?? DEFAULT_TEXT_MODELS.nvidia,
             visionModel: process.env.NVIDIA_VISION_MODEL ?? DEFAULT_VISION_MODELS.nvidia,
             baseUrl: process.env.NVIDIA_API_URL
@@ -66,12 +80,12 @@ export function loadConfigFromEnv() {
             baseUrl: process.env.SAMBANOVA_API_URL
         };
     }
-    const cloudflareToken = process.env.CLOUDFLARE_API_TOKEN;
-    const cloudflareAccountId = process.env.CLOUDFLARE_ACCOUNT_ID;
-    if (cloudflareToken && cloudflareAccountId) {
+    const cloudflareTokens = loadEnvKeys("CLOUDFLARE_API_TOKEN");
+    const cloudflareAccountIds = loadEnvKeys("CLOUDFLARE_ACCOUNT_ID");
+    if (cloudflareTokens.length > 0 && cloudflareAccountIds.length > 0) {
         config.cloudflare = {
-            apiToken: cloudflareToken,
-            accountId: cloudflareAccountId,
+            apiTokens: cloudflareTokens,
+            accountIds: cloudflareAccountIds,
             textModel: process.env.CLOUDFLARE_TEXT_MODEL ?? DEFAULT_TEXT_MODELS.cloudflare,
             visionModel: process.env.CLOUDFLARE_VISION_MODEL ?? DEFAULT_VISION_MODELS.cloudflare
         };

@@ -22,7 +22,7 @@ export class OpenAICompatibleProvider {
     getModelConfig() {
         return { textModel: this.textModel, visionModel: this.visionModel };
     }
-    async invoke(input) {
+    async sendRequest(apiKey, input) {
         const hasImage = Boolean(input.imageBase64);
         const model = hasImage ? this.visionModel : this.textModel;
         const userContent = hasImage
@@ -34,7 +34,7 @@ export class OpenAICompatibleProvider {
         const response = await fetch(this.apiUrl, {
             method: "POST",
             headers: {
-                Authorization: `Bearer ${this.apiKey}`,
+                Authorization: `Bearer ${apiKey}`,
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
@@ -63,5 +63,8 @@ export class OpenAICompatibleProvider {
             throw new Error(`${this.name} returned an empty response (model: ${model}). The response may have been filtered or the model produced no output.`);
         }
         return content;
+    }
+    async invoke(input) {
+        return this.sendRequest(this.apiKey, input);
     }
 }

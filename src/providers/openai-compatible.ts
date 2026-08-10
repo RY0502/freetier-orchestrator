@@ -14,7 +14,7 @@ interface ChatCompletionResponse {
 export class OpenAICompatibleProvider implements Provider<LlmInput, string> {
   constructor(
     readonly name: string,
-    private readonly apiKey: string,
+    protected readonly apiKey: string,
     private readonly textModel: string,
     private readonly visionModel: string,
     private readonly maxTokens: number,
@@ -26,7 +26,7 @@ export class OpenAICompatibleProvider implements Provider<LlmInput, string> {
     return { textModel: this.textModel, visionModel: this.visionModel };
   }
 
-  async invoke(input: LlmInput): Promise<string> {
+  protected async sendRequest(apiKey: string, input: LlmInput): Promise<string> {
     const hasImage = Boolean(input.imageBase64);
     const model = hasImage ? this.visionModel : this.textModel;
 
@@ -40,7 +40,7 @@ export class OpenAICompatibleProvider implements Provider<LlmInput, string> {
     const response = await fetch(this.apiUrl, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${this.apiKey}`,
+        Authorization: `Bearer ${apiKey}`,
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
@@ -77,5 +77,9 @@ export class OpenAICompatibleProvider implements Provider<LlmInput, string> {
     }
 
     return content;
+  }
+
+  async invoke(input: LlmInput): Promise<string> {
+    return this.sendRequest(this.apiKey, input);
   }
 }

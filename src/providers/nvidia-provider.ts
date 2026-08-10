@@ -1,9 +1,9 @@
 import { OpenAICompatibleProvider } from "./openai-compatible.js";
 
 export class NvidiaProvider extends OpenAICompatibleProvider {
-  constructor(apiKey: string, textModel: string, visionModel: string, maxTokens: number, baseUrl?: string, requestTimeoutMs?: number) {
+  constructor(apiKey: string, textModel: string, visionModel: string, maxTokens: number, baseUrl?: string, requestTimeoutMs?: number, instance: number = 1) {
     super(
-      "NVIDIA",
+      instance > 1 ? `NVIDIA #${instance}` : "NVIDIA",
       apiKey,
       textModel,
       visionModel,

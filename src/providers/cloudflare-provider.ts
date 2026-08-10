@@ -13,15 +13,18 @@ interface CloudflareResponse {
 }
 
 export class CloudflareProvider implements Provider<LlmInput, string> {
-  readonly name = "Cloudflare";
+  readonly name: string;
 
   constructor(
     private readonly apiToken: string,
     private readonly accountId: string,
     private readonly textModel: string,
     private readonly visionModel: string,
-    private readonly requestTimeoutMs: number = DEFAULT_REQUEST_TIMEOUT_MS
-  ) {}
+    private readonly requestTimeoutMs: number = DEFAULT_REQUEST_TIMEOUT_MS,
+    instance: number = 1
+  ) {
+    this.name = instance > 1 ? `Cloudflare #${instance}` : "Cloudflare";
+  }
 
   getModelConfig() {
     return { textModel: this.textModel, visionModel: this.visionModel };

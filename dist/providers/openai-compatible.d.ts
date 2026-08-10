@@ -4,7 +4,7 @@ import type { LlmInput } from "./types.js";
 export declare const DEFAULT_REQUEST_TIMEOUT_MS = 60000;
 export declare class OpenAICompatibleProvider implements Provider<LlmInput, string> {
     readonly name: string;
-    private readonly apiKey;
+    protected readonly apiKey: string;
     private readonly textModel;
     private readonly visionModel;
     private readonly maxTokens;
@@ -15,6 +15,7 @@ export declare class OpenAICompatibleProvider implements Provider<LlmInput, stri
         textModel: string;
         visionModel: string;
     };
+    protected sendRequest(apiKey: string, input: LlmInput): Promise<string>;
     invoke(input: LlmInput): Promise<string>;
 }
 //# sourceMappingURL=openai-compatible.d.ts.map

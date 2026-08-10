@@ -16,22 +16,22 @@ export interface ProviderConfig {
         visionModel: string;
     };
     nvidia?: {
-        apiKey: string;
+        apiKeys: string[];
         textModel: string;
         visionModel: string;
         baseUrl?: string;
+    };
+    cloudflare?: {
+        apiTokens: string[];
+        accountIds: string[];
+        textModel: string;
+        visionModel: string;
     };
     sambanova?: {
         apiKey: string;
         textModel: string;
         visionModel: string;
         baseUrl?: string;
-    };
-    cloudflare?: {
-        apiToken: string;
-        accountId: string;
-        textModel: string;
-        visionModel: string;
     };
     cerebras?: {
         apiKey: string;

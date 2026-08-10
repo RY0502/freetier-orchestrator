@@ -6,8 +6,8 @@ export declare class CloudflareProvider implements Provider<LlmInput, string> {
     private readonly textModel;
     private readonly visionModel;
     private readonly requestTimeoutMs;
-    readonly name = "Cloudflare";
-    constructor(apiToken: string, accountId: string, textModel: string, visionModel: string, requestTimeoutMs?: number);
+    readonly name: string;
+    constructor(apiToken: string, accountId: string, textModel: string, visionModel: string, requestTimeoutMs?: number, instance?: number);
     getModelConfig(): {
         textModel: string;
         visionModel: string;

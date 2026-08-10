@@ -14,76 +14,102 @@ export function createProviders(type: "text" | "vision" = "text"): Provider<LlmI
   const maxTokens = config.maxTokens;
   const timeoutMs = config.requestTimeoutMs;
 
-  const providerMap: Record<string, () => Provider<LlmInput, string> | undefined> = {
-    cloudflare: () =>
-      config.cloudflare
-        ? new CloudflareProvider(
-            config.cloudflare.apiToken,
-            config.cloudflare.accountId,
-            config.cloudflare.textModel,
-            config.cloudflare.visionModel,
-            timeoutMs
-          )
-        : undefined,
-    groq: () =>
-      config.groq
-        ? new GroqProvider(config.groq.apiKey, config.groq.textModel, config.groq.visionModel, maxTokens, timeoutMs)
-        : undefined,
-    nvidia: () =>
-      config.nvidia
-        ? new NvidiaProvider(
-            config.nvidia.apiKey,
-            config.nvidia.textModel,
-            config.nvidia.visionModel,
-            maxTokens,
-            config.nvidia.baseUrl,
-            timeoutMs
-          )
-        : undefined,
-    cerebras: () =>
-      config.cerebras
-        ? new CerebrasProvider(
-            config.cerebras.apiKey,
-            config.cerebras.textModel,
-            config.cerebras.visionModel,
-            maxTokens,
-            config.cerebras.baseUrl,
-            timeoutMs
-          )
-        : undefined,
-    huggingface: () =>
-      config.huggingface
-        ? new HuggingFaceProvider(
-            config.huggingface.apiKey,
-            config.huggingface.textModel,
-            config.huggingface.visionModel,
-            maxTokens,
-            timeoutMs
-          )
-        : undefined,
-    sambanova: () =>
-      config.sambanova
-        ? new SambaNovaProvider(
-            config.sambanova.apiKey,
-            config.sambanova.textModel,
-            config.sambanova.visionModel,
-            maxTokens,
-            config.sambanova.baseUrl,
-            timeoutMs
-          )
-        : undefined
-  };
+  const providers: Provider<LlmInput, string>[] = [];
+
+  function addCloudflareProviders() {
+    if (!config.cloudflare?.apiTokens?.length) return;
+
+    config.cloudflare.apiTokens.forEach((token, index) => {
+      const accountId = config.cloudflare!.accountIds[index] ?? config.cloudflare!.accountIds[0];
+      providers.push(
+        new CloudflareProvider(
+          token,
+          accountId,
+          config.cloudflare!.textModel,
+          config.cloudflare!.visionModel,
+          timeoutMs,
+          index + 1
+        )
+      );
+    });
+  }
+
+  function addNvidiaProviders() {
+    if (!config.nvidia?.apiKeys?.length) return;
+
+    config.nvidia.apiKeys.forEach((apiKey, index) => {
+      providers.push(
+        new NvidiaProvider(
+          apiKey,
+          config.nvidia!.textModel,
+          config.nvidia!.visionModel,
+          maxTokens,
+          config.nvidia!.baseUrl,
+          timeoutMs,
+          index + 1
+        )
+      );
+    });
+  }
 
   const textOrder = ["cloudflare", "groq", "nvidia", "cerebras", "huggingface", "sambanova"];
   const visionOrder = ["cloudflare", "nvidia", "cerebras", "groq", "huggingface", "sambanova"];
-
   const order = type === "vision" ? visionOrder : textOrder;
-  const providers: Provider<LlmInput, string>[] = [];
 
   for (const name of order) {
-    const provider = providerMap[name]?.();
-    if (provider) {
-      providers.push(provider);
+    switch (name) {
+      case "cloudflare":
+        addCloudflareProviders();
+        break;
+      case "nvidia":
+        addNvidiaProviders();
+        break;
+      case "groq":
+        if (config.groq) {
+          providers.push(new GroqProvider(config.groq.apiKey, config.groq.textModel, config.groq.visionModel, maxTokens, timeoutMs));
+        }
+        break;
+      case "cerebras":
+        if (config.cerebras) {
+          providers.push(
+            new CerebrasProvider(
+              config.cerebras.apiKey,
+              config.cerebras.textModel,
+              config.cerebras.visionModel,
+              maxTokens,
+              config.cerebras.baseUrl,
+              timeoutMs
+            )
+          );
+        }
+        break;
+      case "huggingface":
+        if (config.huggingface) {
+          providers.push(
+            new HuggingFaceProvider(
+              config.huggingface.apiKey,
+              config.huggingface.textModel,
+              config.huggingface.visionModel,
+              maxTokens,
+              timeoutMs
+            )
+          );
+        }
+        break;
+      case "sambanova":
+        if (config.sambanova) {
+          providers.push(
+            new SambaNovaProvider(
+              config.sambanova.apiKey,
+              config.sambanova.textModel,
+              config.sambanova.visionModel,
+              maxTokens,
+              config.sambanova.baseUrl,
+              timeoutMs
+            )
+          );
+        }
+        break;
     }
   }
 

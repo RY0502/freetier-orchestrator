@@ -7,13 +7,14 @@ export class CloudflareProvider {
     textModel;
     visionModel;
     requestTimeoutMs;
-    name = "Cloudflare";
-    constructor(apiToken, accountId, textModel, visionModel, requestTimeoutMs = DEFAULT_REQUEST_TIMEOUT_MS) {
+    name;
+    constructor(apiToken, accountId, textModel, visionModel, requestTimeoutMs = DEFAULT_REQUEST_TIMEOUT_MS, instance = 1) {
         this.apiToken = apiToken;
         this.accountId = accountId;
         this.textModel = textModel;
         this.visionModel = visionModel;
         this.requestTimeoutMs = requestTimeoutMs;
+        this.name = instance > 1 ? `Cloudflare #${instance}` : "Cloudflare";
     }
     getModelConfig() {
         return { textModel: this.textModel, visionModel: this.visionModel };

@@ -29,10 +29,10 @@ The framework includes ready-to-use providers for popular LLM services. They aut
 
 - **Groq** - `GROQ_API_KEY`
 - **HuggingFace** - `HUGGINGFACE_API_KEY`
-- **NVIDIA** - `NVIDIA_API_KEY`, `NVIDIA_API_URL` (optional)
+- **NVIDIA** - `NVIDIA_API_KEY`, `NVIDIA_API_KEY_1`, `NVIDIA_API_KEY_2`, ... and optional `NVIDIA_API_URL`
 - **SambaNova** - `SAMBANOVA_API_KEY`, `SAMBANOVA_API_URL` (optional)
 - **Cerebras** - `CEREBRAS_API_KEY`, `CEREBRAS_API_URL` (optional)
-- **Cloudflare Workers AI** - `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`
+- **Cloudflare Workers AI** - `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_API_TOKEN_1`, `CLOUDFLARE_API_TOKEN_2`, ..., plus `CLOUDFLARE_ACCOUNT_ID` / `CLOUDFLARE_ACCOUNT_ID_1`, ...
 
 ### Quick Start
 
@@ -73,11 +73,18 @@ Set API keys in your `.env`:
 GROQ_API_KEY=your_key_here
 HUGGINGFACE_API_KEY=your_key_here
 NVIDIA_API_KEY=your_key_here
+NVIDIA_API_KEY_1=your_second_key_here
+NVIDIA_API_KEY_2=your_third_key_here
 SAMBANOVA_API_KEY=your_key_here
 CEREBRAS_API_KEY=your_key_here
 CLOUDFLARE_API_TOKEN=your_token_here
+CLOUDFLARE_API_TOKEN_1=your_second_token_here
+CLOUDFLARE_API_TOKEN_2=your_third_token_here
 CLOUDFLARE_ACCOUNT_ID=your_account_id_here
+CLOUDFLARE_ACCOUNT_ID_1=your_account_id_here
 ```
+
+For NVIDIA and Cloudflare, the base key is tried first, then numbered keys in ascending order.
 
 Optional model overrides (uses framework defaults if not set). Each provider has separate
 text and vision model env vars:
