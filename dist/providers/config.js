@@ -5,7 +5,7 @@ export const DEFAULT_TEXT_MODELS = {
     requesty: "nvidia/nemotron-3-super-120b-a12b",
     sambanova: "Meta-Llama-3.3-70B-Instruct",
     cloudflare: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
-    cerebras: "zai-glm-4.7"
+    cerebras: "gpt-oss-120b"
 };
 export const DEFAULT_VISION_MODELS = {
     groq: "qwen/qwen3.6-27b",
